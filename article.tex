@@ -51,4 +51,14 @@ Gdzie:
     \item $h_\theta$ - funkcja hipotezy wykorzystująca parametry $\bm{\theta}$
 \end{itemize}
 
+\subsection{Funkcja kosztu}
+
+Ucząc model musimy mierzyć, jak dobrze dopasowuje się do danych wejściowych. W przypadku regresji liniowej najczęściej wybieraną funkcją kosztu jest błąd średnio kwadratowy (ang. mean squared error - MSE). Funkcja ta jest dana wzorem: 
+\begin{equation}
+    \text{MSE}(\bm{\theta}) = \frac{1}{n}\sum_{i = 1}^{n}(\bm{\theta}^T\cdot\bm{x}^{(i)} - y^{(i)})^2
+\end{equation}
+
+% \subsection{Wyznaczanie wektora $\bm{\theta}$}
+% By móc wyznaczyć wartość estymowaną $\hat{y}$ dla wektora $\bm{x}$ musimy znać wektor $\bm{\theta}$. Można to zrobić na dwa sposoby. 
+
 \end{document}
