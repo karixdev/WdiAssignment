@@ -1,6 +1,9 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}\usepackage{titlesec}
+\usepackage[T1]{fontenc}
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{bm}
 
 \title{Implementacja algorytmu regresji liniowej w języku Python}
 \author{Karol Kluczniok}
@@ -12,8 +15,40 @@
 
 \titlelabel{\thetitle.\quad}
 
+\let\oldref\ref
+\renewcommand{\ref}[1]{(\oldref{#1})}
+
+\numberwithin{equation}{section}
+
 \section{Wstęp teoretyczny}
 
 Regresja liniowa pozwala przewidzieć wartość zmiennej na podstawie wartości innej zmiennej. Zakłada ona, że zależność pomiędzy zmienną objaśnianą a objaśniająca jest zależnością liniową. W regresji liniowej zakłada się, że wzrostowi jednej zmiennej towarzyszy wzrost lub spadek na drugiej zmiennej - tak jak w analizie korelacji.
+
+\subsection{Wzór regresji liniowej}
+\begin{equation}
+    \hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x _2 + \cdots + \theta_n x_n
+\end{equation}
+Gdzie:
+\begin{itemize}
+    \item $\hat{y}$ - prognozowana wartość
+    \item $n$ - liczba cech
+    \item $x_i$ - wartość $i$-tej cechy
+    \item $\theta_j$ - $j$-ty parametr modelu
+    \label{eqn:v1}
+\end{itemize}
+
+\noindent Równanie \ref{eqn:v1} można zapisać w postaci zwektoryzowanej:
+
+\begin{equation}
+    \hat{y} = h_\theta(\bm{x})=\bm{\theta}^T\cdot\bm{x}
+\end{equation}
+Gdzie:
+\begin{itemize}
+    \item $\bm{\theta}$ - wektor parametrów modelu, zawierający punkt obciążenia $\theta_0$ i wagi cech od $\theta_1$ do $\theta_n$
+    \item $\bm{\theta}^T$ - transponowany wektor $\bm{\theta}$ (wektor wierszowy zamiast kolumnowego)
+    \item $\bm{x}$ - wektor cech danego przykładu, zaiwerający cechy od $x_i$ do $x_n$ gdzie $x_0$ zawsze równa się $1$
+    \item $\bm{\theta}^T \cdot \bm{x}$ - iloczyn skalarny wektorów $\bm{\theta}^T$ i $\bm{x}$
+    \item $h_\theta$ - funkcja hipotezy wykorzystująca parametry $\bm{\theta}$
+\end{itemize}
 
 \end{document}
