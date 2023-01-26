@@ -25,6 +25,7 @@
 Regresja liniowa pozwala przewidzieć wartość zmiennej na podstawie wartości innej zmiennej. Zakłada ona, że zależność pomiędzy zmienną objaśnianą a objaśniająca jest zależnością liniową. W regresji liniowej zakłada się, że wzrostowi jednej zmiennej towarzyszy wzrost lub spadek na drugiej zmiennej - tak jak w analizie korelacji.
 
 \subsection{Wzór regresji liniowej}
+Model regresji liniowej dany jest następującą zależnością:
 \begin{equation}
     \hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x _2 + \cdots + \theta_n x_n
 \end{equation}
@@ -52,13 +53,70 @@ Gdzie:
 \end{itemize}
 
 \subsection{Funkcja kosztu}
-
 Ucząc model musimy mierzyć, jak dobrze dopasowuje się do danych wejściowych. W przypadku regresji liniowej najczęściej wybieraną funkcją kosztu jest błąd średnio kwadratowy (ang. mean squared error - MSE). Funkcja ta jest dana wzorem: 
 \begin{equation}
-    \text{MSE}(\bm{\theta}) = \frac{1}{n}\sum_{i = 1}^{n}(\bm{\theta}^T\cdot\bm{x}^{(i)} - y^{(i)})^2
+    \text{MSE}(\bm{\theta}) = \frac{1}{m}\sum_{i = 1}^{m}(\bm{\theta}^T\cdot\bm{x}^{(i)} - y^{(i)})^2
 \end{equation}
 
-% \subsection{Wyznaczanie wektora $\bm{\theta}$}
-% By móc wyznaczyć wartość estymowaną $\hat{y}$ dla wektora $\bm{x}$ musimy znać wektor $\bm{\theta}$. Można to zrobić na dwa sposoby. 
+\noindent Gdzie:
+\begin{itemize}
+    \item $m$ - liczba próbek
+    \item $\bm{x}^{(i)}$ - wektor wartości wszystkich cech $i$-tej próbki
+    \item $y^{(i)}$ - wartość etykiety (wartości) $i$-tej próbki 
+\end{itemize}
+
+\subsection{Wyznaczanie wektora $\bm{\theta}$}
+W celu wyznaczenia wektora $\bm{\theta}$ użyjemy gradientu prostego. Jest on algorytmem iteracyjnym, numerycznym optymalizacji, stosowanym do znalezienia lokalnego minimum danej funkcji kosztu.\\
+
+\noindent Aby zaimplementować ten algorytm musimy obliczyć pochodną cząstkową wobec każdego parametru $\theta_j$ modelu.
+
+\begin{equation}
+    \frac{\partial}{\partial \theta_j}\text{MSE}(\bm{\theta})=\frac{2}{m}\sum_{i = 1}^{m} (\bm{\theta}^T\cdot\bm{x}^{(i)} -y^{(i)})x^{(i)}_{j}
+\end{equation}
+
+\noindent Gdzie:
+\begin{itemize}
+    \item $x_j^{(i)}$ - wartośc $j$-tej cechy $i$-tej próbki
+\end{itemize}
+
+\noindent Zamiast pojedyńczo obliczać pochodne funkjcji kosztu po każdym parametrze, wyznaczmy gradient $\text{MSE}(\bm{\theta})$:
+
+\begin{equation}
+    \nabla_{\theta}\text{MSE}(\bm{\theta})=\begin{bmatrix}
+    \frac{\partial}{\partial \theta_0}\text{MSE}(\bm{\theta}) \\
+    \frac{\partial}{\partial \theta_1}\text{MSE}(\bm{\theta}) \\
+    \vdots \\
+    \frac{\partial}{\partial \theta_n}\text{MSE}(\bm{\theta})
+    \end{bmatrix} = \frac{2}{m}\bm{X}^T\cdot (\bm{X} \cdot \bm{\theta} - \bm{y})
+\end{equation}
+
+\noindent Gdzie:
+\begin{itemize}
+    \item $\bm{y}$ - wektor wszystkich etykiet (wartości)
+    \item $\bm{X}$ - macierz zawierająca wartości wszystkich cech wszystkich próbek:
+    $$\bm{X}=\begin{bmatrix}
+        (\bm{x}^{(1)})^T \\
+        (\bm{x}^{(2)})^T \\
+        \vdots \\
+        (\bm{x}^{(m)})^T \\
+    \end{bmatrix} = \begin{bmatrix}
+        1 & x_{11} & \cdots & x_{1n} \\
+        1 & x_{21} & \cdots & x_{2n} \\
+        \vdots & \vdots & \ddots &  \vdots \\
+        1 & x_{m1} & \cdots & x_{mn}
+    \end{bmatrix}$$
+\end{itemize}
+
+\noindent Po wyznaczeniu $\nabla_{\theta}\text{MSE}(\bm{\theta})$ możemy zaktualizować wektor parametrów $\bm{\theta}$:
+
+\begin{equation}
+    \bm{\theta}^{\text{(kolejny krok)}} = \bm{\theta} - \eta\nabla_{\theta}\text{MSE}(\bm{\theta})
+\end{equation}
+
+\noindent Gdzie:
+
+\begin{itemize}
+    \item $\eta$ - współczynnik uczenia
+\end{itemize}
 
 \end{document}
