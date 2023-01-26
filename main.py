@@ -22,6 +22,8 @@ model.fit(X, y, optimizer)
 X_new = np.array([[0], [3]])
 y_predicted = model.predict(X_new)
 
+plt.xlabel('x')
+plt.ylabel('y')
 plt.scatter(X, y)
 plt.plot(X_new, y_predicted, 'r', label="Prosta regresji")
 plt.legend(loc="upper left")
